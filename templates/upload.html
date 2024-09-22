@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload CSV</title>
+    <script>
+        function showInputFields() {
+            document.getElementById("input-fields").style.display = "block";
+        }
+
+        function handleUpload(event) {
+            event.preventDefault();
+            const form = document.getElementById('upload-form');
+            const formData = new FormData(form);
+
+            fetch('/', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    showInputFields();
+                } else {
+                    alert("Upload failed. Please try again.");
+                }
+            });
+        }
+
+        function generateTeams(event) {
+            event.preventDefault();
+            const inputForm = document.getElementById('input-form');
+            const formData = new FormData(inputForm);
+
+            fetch('/generate', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(result => {
+                document.getElementById("output").innerHTML = result.html;
+            });
+        }
+    </script>
+</head>
+<body>
+    <h1>Upload CSV File or Google Sheets URL</h1>
+    <form id="upload-form" method="post" enctype="multipart/form-data" onsubmit="handleUpload(event);">
+        <input type="file" name="file" accept=".csv">
+        <br>
+        <label for="google_sheets_url">Google Sheets URL:</label>
+        <input type="text" name="google_sheets_url" placeholder="Enter Google Sheets URL">
+        <br>
+        <input type="submit" value="Upload">
+    </form>
+
+    <div id="input-fields" style="display:none;">
+        <h2>Enter Team Assignment Parameters</h2>
+        <form id="input-form" onsubmit="generateTeams(event);">
+            <label for="num_teams">Number of Teams:</label>
+            <input type="number" name="num_teams" min="1" required>
+            <br>
+            <label for="max_team_size">Max Team Size:</label>
+            <input type="number" name="max_team_size" min="1" required>
+            <br>
+            <input type="submit" value="Generate">
+        </form>
+    </div>
+
+    <div id="output"></div>
+</body>
+</html>
