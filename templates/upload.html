@@ -159,18 +159,19 @@
         </form>
 
         <div id="input-fields" style="display:none;">
-            <form id="input-form" onsubmit="generateTeams(event);" style="display: flex; flex-wrap: wrap;">
-                <div class="form-row" style="flex: 1; min-width: 50%; display: flex; align-items: center;">
+            <form id="input-form" onsubmit="generateTeams(event);" style="display: flex; flex-direction: column; flex-wrap: wrap;">
+                <div class="form-row" style="display: flex; align-items: center; margin-bottom: 10px;">
                     <label for="num_teams" style="flex: 1;">Number of Teams:</label>
-                    <input type="number" name="num_teams" min="1" required style="width: 100px; margin-left: 5px; margin-right: 20px;">
+                    <input type="number" name="num_teams" min="1" required style="flex: 2; margin-left: 5px;">
                 </div>
-                <div class="form-row" style="flex: 1; min-width: 50%; display: flex; align-items: center;">
+                <div class="form-row" style="display: flex; align-items: center; margin-bottom: 10px;">
                     <label for="max_team_size" style="flex: 1;">Max Team Size:</label>
-                    <input type="number" name="max_team_size" min="1" required style="width: 100px; margin-left: 20px;">
+                    <input type="number" name="max_team_size" min="1" required style="flex: 2; margin-left: 5px;">
                 </div>
-                <input type="submit" value="Generate" style="flex-basis: 100%;">
+                <input type="submit" value="Generate" style="margin-top: 10px;">
             </form>
         </div>
+
 
 
         <div id="output"></div>
