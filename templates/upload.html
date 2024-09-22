@@ -4,19 +4,90 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Quick Team Balancer</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <style>
-        table {
-            margin-bottom: 20px; /* Adds 20px space below the table */
-        }
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f8f8f8;
+        color: #333;
+        margin: 0;
+        padding: 20px;
+        display: flex;
+        justify-content: center;
+    }
+    .container {
+        max-width: 800px; /* Adjust max-width as needed */
+        width: 100%;
+        background-color: #fff;
+        padding: 20px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
+    h1, h2 {
+        margin: 0 0 10px;
+    }
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 20px;
+    }
+    th, td {
+        padding: 10px;
+        text-align: left;
+        border: 1px solid #ddd;
+    }
+    th {
+        background-color: #f2f2f2;
+    }
+    form {
+        background-color: #fff;
+        padding: 15px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        margin-bottom: 20px;
+    }
+    .form-row {
+        display: flex;
+        align-items: center;
+        margin-bottom: 10px;
+    }
+    label {
+        flex: 1;
+    }
+    input[type="text"],
+    input[type="number"],
+    input[type="submit"] {
+        width: 100%;
+        padding: 10px;
+        margin: 5px 0;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+    }
+    input[type="submit"] {
+        background-color: #0079d3;
+        color: white;
+        cursor: pointer;
+    }
+    input[type="submit"]:hover {
+        background-color: #005ea6;
+    }
+    #output {
+        background-color: #fff;
+        padding: 15px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+    }
     </style>
+
     <script>
         function showInputFields() {
             document.getElementById("input-fields").style.display = "block";
         }
 
-        function handleUpload(event) {
+        function handleGoogleSheets(event) {
             event.preventDefault();
-            const form = document.getElementById('upload-form');
+            const form = document.getElementById('google-sheets-form');
             const formData = new FormData(form);
 
             fetch('/', {
@@ -28,7 +99,7 @@
                 if (data.success) {
                     showInputFields();
                 } else {
-                    alert("Upload failed. Please try again.");
+                    alert("Link validation failed. Please try again.");
                 }
             });
         }
@@ -49,60 +120,60 @@
         }
     </script>
 </head>
+
 <body>
-    <h1>Quick Team Balancer</h1>
-    <p>Upload a CSV file or enter a Google Sheets link in a format similar to the example below.</p>
-    <h4 style="margin: 0;">Table Example:</h4>
-    <table border="1">
-        <tr>
-            <th>John Doe</th>
-            <th>Jane Smith</th>
-            <th>Bob Johnson</th>
-        </tr>
-        <tr>
-            <td>8</td>
-            <td>6</td>
-            <td>5</td>
-        </tr>
-        <tr>
-            <td>7</td>
-            <td>7</td>
-            <td>8</td>
-        </tr>
-        <tr>
-            <td>9</td>
-            <td>8</td>
-            <td>6</td>
-        </tr>
-        <tr>
-            <td>6</td>
-            <td>9</td>
-            <td>7</td>
-        </tr>
-    </table>
+    <div class="container">
+        <h1>Quick Team Balancer</h1>
+        <p>Enter a Google Sheets link formatted like the example below, including player name and scores</p>
 
-    <form id="upload-form" method="post" enctype="multipart/form-data" onsubmit="handleUpload(event);">
-        <input type="file" name="file" accept=".csv">
-        <br>
-        <label for="google_sheets_url">Google Sheets URL:</label>
-        <input type="text" name="google_sheets_url" placeholder="Enter Google Sheets URL">
-        <br>
-        <input type="submit" value="Upload">
-    </form>
+        <table>
+            <tr>
+                <th>John Doe</th>
+                <th>Jane Smith</th>
+                <th>Bob Johnson</th>
+            </tr>
+            <tr>
+                <td>8</td>
+                <td>6</td>
+                <td>5</td>
+            </tr>
+            <tr>
+                <td>7</td>
+                <td>7</td>
+                <td>8</td>
+            </tr>
+            <tr>
+                <td>9</td>
+                <td>8</td>
+                <td>6</td>
+            </tr>
+        </table>
 
-    <div id="input-fields" style="display:none;">
-        <h2>Enter Team Parameters</h2>
-        <form id="input-form" onsubmit="generateTeams(event);">
-            <label for="num_teams">Number of Teams:</label>
-            <input type="number" name="num_teams" min="1" required>
-            <br>
-            <label for="max_team_size">Max Team Size:</label>
-            <input type="number" name="max_team_size" min="1" required>
-            <br>
-            <input type="submit" value="Generate">
+        <form id="google-sheets-form" method="post" onsubmit="handleGoogleSheets(event);" style="display: flex; flex-wrap: wrap; align-items: center; gap: 5px;">
+            <div class="form-row" style="flex: 1; min-width: 50%; display: flex; align-items: center;">
+                <label for="google_sheets_url" style="flex: 1; margin: 0;">Google Sheets URL:</label>
+                <input type="text" name="google_sheets_url" placeholder="Enter Google Sheets URL" required style="width: 580px; margin: 0 5px;">
+            </div>
+            <input type="submit" value="Submit" style="flex-basis: 100%; margin: 0;">
+            <p style="flex-basis: 100%; margin: 5px 0; text-align: center; font-size: 13px; color: grey;">Make sure the sheet is set to "Anyone with a link"</p>
         </form>
-    </div>
 
-    <div id="output"></div>
+        <div id="input-fields" style="display:none;">
+            <form id="input-form" onsubmit="generateTeams(event);" style="display: flex; flex-wrap: wrap;">
+                <div class="form-row" style="flex: 1; min-width: 50%; display: flex; align-items: center;">
+                    <label for="num_teams" style="flex: 1;">Number of Teams:</label>
+                    <input type="number" name="num_teams" min="1" required style="width: 200px; margin-left: 5px; margin-right: 20px;">
+                </div>
+                <div class="form-row" style="flex: 1; min-width: 50%; display: flex; align-items: center;">
+                    <label for="max_team_size" style="flex: 1;">Max Team Size:</label>
+                    <input type="number" name="max_team_size" min="1" required style="width: 230px; margin-left: 20px;">
+                </div>
+                <input type="submit" value="Generate" style="flex-basis: 100%;">
+            </form>
+        </div>
+
+
+        <div id="output"></div>
+    </div>
 </body>
 </html>
