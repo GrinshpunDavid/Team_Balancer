@@ -3,10 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Processed Data</title>
 </head>
 <body>
-    <h1>Processed CSV Data</h1>
     {% for table in tables %}
     {{ table|safe }}
     {% endfor %}

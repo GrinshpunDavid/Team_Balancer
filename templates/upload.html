@@ -3,7 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Upload CSV</title>
+    <title>Quick Team Balancer</title>
+    <style>
+        table {
+            margin-bottom: 20px; /* Adds 20px space below the table */
+        }
+    </style>
     <script>
         function showInputFields() {
             document.getElementById("input-fields").style.display = "block";
@@ -45,7 +50,37 @@
     </script>
 </head>
 <body>
-    <h1>Upload CSV File or Google Sheets URL</h1>
+    <h1>Quick Team Balancer</h1>
+    <p>Upload a CSV file or enter a Google Sheets link in a format similar to the example below.</p>
+    <h4 style="margin: 0;">Table Example:</h4>
+    <table border="1">
+        <tr>
+            <th>John Doe</th>
+            <th>Jane Smith</th>
+            <th>Bob Johnson</th>
+        </tr>
+        <tr>
+            <td>8</td>
+            <td>6</td>
+            <td>5</td>
+        </tr>
+        <tr>
+            <td>7</td>
+            <td>7</td>
+            <td>8</td>
+        </tr>
+        <tr>
+            <td>9</td>
+            <td>8</td>
+            <td>6</td>
+        </tr>
+        <tr>
+            <td>6</td>
+            <td>9</td>
+            <td>7</td>
+        </tr>
+    </table>
+
     <form id="upload-form" method="post" enctype="multipart/form-data" onsubmit="handleUpload(event);">
         <input type="file" name="file" accept=".csv">
         <br>
@@ -56,7 +91,7 @@
     </form>
 
     <div id="input-fields" style="display:none;">
-        <h2>Enter Team Assignment Parameters</h2>
+        <h2>Enter Team Parameters</h2>
         <form id="input-form" onsubmit="generateTeams(event);">
             <label for="num_teams">Number of Teams:</label>
             <input type="number" name="num_teams" min="1" required>

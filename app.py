@@ -60,8 +60,7 @@ def generate():
 
         # Create HTML to display the results
         html_content = f"""
-            <h1>Processed Data</h1>
-            <table border="1">{processed_data.to_html()}</table>
+            <table border="1">{processed_data.to_html(index=False)}</table>
             <a href="/download">Download CSV</a>
         """
         return jsonify({"html": html_content})
